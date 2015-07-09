@@ -60,6 +60,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\_shared\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Code\Commands\ShowTimeLineCommandUnitTests - Copy.cs" />
     <Compile Include="Code\Commands\ShowWallCommandUnitTests.cs" />
     <Compile Include="Code\Commands\PostMessageCommandUnitTests.cs" />
