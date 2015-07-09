@@ -7,9 +7,9 @@
 	using StructureMap;
 	using StructureMap.Graph;
 
-	using UI.Console.Code;
-	using UI.Console.Code.Commands;
-	using UI.Console.Storage;
+	using Code;
+	using Code.Commands;
+	using Storage;
 
 	public class Program
 	{
@@ -27,13 +27,13 @@
 						break;
 					}
 
-					//// Output the command resuls
 					var result = app.ProcessInput(input);
 					if (null == result)
 					{
 						continue;
 					}
 
+					//// Output the command resuls
 					foreach (var text in result)
 					{
 						Console.WriteLine(text);
