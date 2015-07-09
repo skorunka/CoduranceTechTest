@@ -18,7 +18,7 @@ namespace UI.Console.UnitTests.Storage
 		#region GetUserByUserName
 
 		[Test, Category("GetUserByUserName")]
-		[TestCase(null), TestCase(""), TestCase("\n")]
+		[TestCase(null), TestCase(""), TestCase("\n"), TestCase(" \n"), TestCase("\n "), TestCase(" \n "), TestCase("  ")]
 		[ExpectedException(typeof(ArgumentException))]
 		public void GetUserByUserName_WhenUserNameIsNullOrWhiteSpace_ThrowArgumentException(string userName)
 		{
@@ -40,6 +40,21 @@ namespace UI.Console.UnitTests.Storage
 			var user = service.GetUserByUserName("non existing username");
 
 			Assert.IsNull(user);
+		}
+
+		#endregion
+
+		#region RegisterNewUser
+
+		[Test, Category("RegisterNewUser")]
+		[TestCase(null), TestCase(""), TestCase("\n"), TestCase(" \n"), TestCase("\n "), TestCase(" \n "), TestCase("  ")]
+		[ExpectedException(typeof(ArgumentException))]
+		public void RegisterNewUser_WhenUserNameIsNullOrWhiteSpace_ThrowArgumentException(string userName)
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			var service = new UserService(storageMock.Object) as IUserService;
+
+			service.RegisterNewUser(userName);
 		}
 
 		#endregion

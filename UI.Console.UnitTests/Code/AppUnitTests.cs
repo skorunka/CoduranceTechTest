@@ -42,7 +42,7 @@ namespace UI.Console.UnitTests.Code
 
 			var commandMock = new Mock<ICommand>();
 			commandMock.SetupGet(x => x.CommandText).Returns("Wall").Verifiable();
-			commandMock.Setup(x => x.Process(It.Is<string>(p => p == "Frantisek"), It.Is<string>(p => p == "data")))
+			commandMock.Setup(x => x.Execute(It.Is<string>(p => p == "Frantisek"), It.Is<string>(p => p == "data")))
 				.Returns(new List<string>())
 				.Verifiable();
 
@@ -65,7 +65,7 @@ namespace UI.Console.UnitTests.Code
 
 			var commandMock = new Mock<ICommand>();
 			commandMock.SetupGet(x => x.CommandText).Returns("Follow").Verifiable();
-			commandMock.Setup(x => x.Process(It.Is<string>(p => p == "Frantisek"), It.Is<string>(p => p == "data")))
+			commandMock.Setup(x => x.Execute(It.Is<string>(p => p == "Frantisek"), It.Is<string>(p => p == "data")))
 				.Throws(new AssertionException("Should not be called."));
 
 			var app = new App(inputParserMock.Object, new List<ICommand> { commandMock.Object }) as IApp;
@@ -89,7 +89,7 @@ namespace UI.Console.UnitTests.Code
 
 			var commandMock = new Mock<ICommand>();
 			commandMock.SetupGet(x => x.CommandText).Returns("Wall").Verifiable();
-			commandMock.Setup(x => x.Process(It.IsAny<string>(), It.IsAny<string>()))
+			commandMock.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<string>()))
 				.Verifiable();
 
 			var app = new App(inputParserMock.Object, new List<ICommand> { commandMock.Object }) as IApp;
@@ -108,7 +108,7 @@ namespace UI.Console.UnitTests.Code
 
 			var commandMock = new Mock<ICommand>();
 			commandMock.SetupGet(x => x.CommandText).Returns(App.DefaultCommandText);
-			commandMock.Setup(x => x.Process(It.IsAny<string>(), It.IsAny<string>()))
+			commandMock.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<string>()))
 				.Verifiable();
 
 			var app = new App(inputParserMock.Object, new List<ICommand> { commandMock.Object }) as IApp;

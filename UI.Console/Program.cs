@@ -9,6 +9,7 @@
 
 	using UI.Console.Code;
 	using UI.Console.Code.Commands;
+	using UI.Console.Storage;
 
 	public class Program
 	{
@@ -28,6 +29,11 @@
 
 					//// Output the command resuls
 					var result = app.ProcessInput(input);
+					if (null == result)
+					{
+						continue;
+					}
+
 					foreach (var text in result)
 					{
 						Console.WriteLine(text);
@@ -46,6 +52,7 @@
 						   s.AddAllTypesOf<ICommand>();
 						   s.WithDefaultConventions();
 					   });
+					   x.For(typeof(IEntityStorage<>)).Use(typeof(InMemoryEntityStorage<>)).Singleton();
 					   x.For<ICollection<ICommand>>().Use(c => c.GetAllInstances<ICommand>().ToList());
 					   x.For<IInputParser>().Use<StringInputParser>();
 				   });

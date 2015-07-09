@@ -60,6 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Code\Commands\PostMessageCommandUnitTests.cs" />
     <Compile Include="Code\StringInputParserUnitTests.cs" />
     <Compile Include="Code\AppUnitTests.cs" />
     <Compile Include="Storage\InMemoryObjectStorageUnitTests.cs" />
@@ -78,6 +79,7 @@
       <Name>UI.Console</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

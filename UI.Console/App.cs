@@ -7,8 +7,6 @@
 	using Code;
 	using Code.Commands;
 
-	using StructureMap.Diagnostics;
-
 	public class App : IApp
 	{
 		public const string ErrorTextInvalidInput = "Invalid input \"{0}\".";
@@ -50,7 +48,7 @@
 			parameters.CommandText = parameters.CommandText ?? DefaultCommandText;
 
 			var command = this.FindCommand(parameters.CommandText);
-			return null == command ? new List<string> { string.Format(ErrorTextCommandNotFound, parameters.CommandText) } : command.Process(parameters.UserName, parameters.Data);
+			return null == command ? new List<string> { string.Format(ErrorTextCommandNotFound, parameters.CommandText) } : command.Execute(parameters.UserName, parameters.Data);
 		}
 
 		private ICommand FindCommand(string commandText)

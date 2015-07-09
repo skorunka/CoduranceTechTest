@@ -1,6 +1,7 @@
 namespace UI.Console.Services
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 
 	using Entities;
@@ -26,6 +27,8 @@ namespace UI.Console.Services
 
 		public User GetUserByUserName(string userName)
 		{
+			userName = userName?.Trim();
+
 			if (string.IsNullOrWhiteSpace(userName))
 			{
 				throw new ArgumentException(nameof(userName));
@@ -37,17 +40,29 @@ namespace UI.Console.Services
 
 		public void RegisterNewUser(string userName)
 		{
-			throw new System.NotImplementedException();
+			userName = userName?.Trim();
+
+			if (string.IsNullOrWhiteSpace(userName))
+			{
+				throw new ArgumentException(nameof(userName));
+			}
+
+			this._userStorage.Add(new User { UserName = userName });
 		}
 
 		public void FollowUser(string userName, string userNameToFollow)
 		{
+			userName = userName?.Trim();
+			userNameToFollow = userNameToFollow?.Trim();
+
 			throw new System.NotImplementedException();
 		}
 
 		public void PublishMessage(string userName, string text)
 		{
-			throw new System.NotImplementedException();
+			userName = userName?.Trim();
+			text = text?.Trim();
+
 		}
 	}
 }
