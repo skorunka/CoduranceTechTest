@@ -30,7 +30,7 @@
 		{
 			var user = this._userService.GetUserByUserName(userName);
 			////TODO[FS]: We could order messages while inserting them to USer.Messages and use ordered container.
-			return user?.Messages.OrderBy(x => x.TimeStampUtc).Select(x => $"{x.Text} ({x.TimeStampUtc.TimeAgo()})").ToList();
+			return user?.Messages.OrderByDescending(x => x.TimeStampUtc).Select(x => $"{x.Text} ({x.TimeStampUtc.TimeAgo()})").ToList();
 		}
 	}
 }

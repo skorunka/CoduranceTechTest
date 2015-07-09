@@ -9,7 +9,7 @@ namespace UI.Console.Code
 		/// </summary>
 		public static string TimeAgo(this DateTime dt)
 		{
-			var span = DateTime.Now - dt;
+			var span = DateTime.UtcNow - dt;
 			if (span.Days > 365)
 			{
 				var years = span.Days / 365;
