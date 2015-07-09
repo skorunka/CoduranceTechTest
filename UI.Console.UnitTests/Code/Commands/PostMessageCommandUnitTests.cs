@@ -14,7 +14,7 @@ namespace UI.Console.UnitTests.Code.Commands
 	[TestFixture]
 	public class PostMessageCommandUnitTests
 	{
-		#region Process
+		#region Execute
 
 		[Test, Category("Execute")]
 		[TestCase(null), TestCase(""), TestCase("\n"), TestCase(" \n"), TestCase("\n "), TestCase(" \n "), TestCase("  ")]

@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 
 	using Services;
 
@@ -25,9 +26,11 @@
 
 		public string CommandText => "timeline";
 
-		public ICollection<string> Execute(string userName, string data)
+		public ICollection<string> Execute(string userName, string data = null)
 		{
-			throw new NotImplementedException();
+			var user = this._userService.GetUserByUserName(userName);
+			////TODO[FS]: We could order messages while inserting them to USer.Messages and use ordered container.
+			return user?.Messages.OrderBy(x => x.TimeStampUtc).Select(x => $"{x.Text} ({x.TimeStampUtc.TimeAgo()})").ToList();
 		}
 	}
 }
