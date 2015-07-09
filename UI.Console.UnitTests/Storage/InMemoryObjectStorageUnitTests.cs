@@ -1,4 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
+// ReSharper disable ClassNeverInstantiated.Local
 namespace UI.Console.UnitTests.Storage
 {
 	using System;
@@ -11,14 +12,18 @@ namespace UI.Console.UnitTests.Storage
 	[TestFixture]
 	public class InMemoryObjectStorageUnitTests
 	{
-		[Test]
+		#region Add
+
+		[Test, Category("Add")]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void WhenAddingNullObject_ThrowArgumentNullException()
+		public void Add_WhenAddingNullObject_ThrowArgumentNullException()
 		{
-			var storage = new InMemoryEntityStorage<TestEntity>();
+			var storage = new InMemoryEntityStorage<TestEntity>() as IEntityStorage<TestEntity>;
 
 			storage.Add(null);
 		}
+
+		#endregion
 
 		private class TestEntity : EntityBase
 		{

@@ -23,7 +23,7 @@ namespace UI.Console.UnitTests.Storage
 		public void GetUserByUserName_WhenUserNameIsNullOrWhiteSpace_ThrowArgumentException(string userName)
 		{
 			var storageMock = new Mock<IEntityStorage<User>>();
-			var service = new UserService(storageMock.Object);
+			var service = new UserService(storageMock.Object) as IUserService;
 
 			service.GetUserByUserName(userName);
 		}
@@ -32,11 +32,10 @@ namespace UI.Console.UnitTests.Storage
 		public void GetUserByUserName_WhenUserDoesNotExist_ReturnNull()
 		{
 			var storageMock = new Mock<IEntityStorage<User>>();
-			storageMock
-				.SetupGet(x => x.Entities)
+			storageMock.SetupGet(x => x.Entities)
 				.Returns(new List<User>());
 
-			var service = new UserService(storageMock.Object);
+			var service = new UserService(storageMock.Object) as IUserService;
 
 			var user = service.GetUserByUserName("non existing username");
 
