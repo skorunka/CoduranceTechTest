@@ -7,10 +7,10 @@
 
 	public class PostMessageCommand : ICommand
 	{
-		private readonly IUserService _userService;
-
 		//// primitive locking
 		private static readonly object SyncLock = new object();
+
+		private readonly IUserService _userService;
 
 		#region ctors
 

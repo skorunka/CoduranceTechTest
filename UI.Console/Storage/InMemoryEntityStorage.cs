@@ -27,5 +27,10 @@
 
 			this._objects.Add(entity);
 		}
+
+		public void Save(T entity)
+		{
+			//// We dont need to do anything as the objects are passed as references and we do not cross app domain...
+		}
 	}
 }

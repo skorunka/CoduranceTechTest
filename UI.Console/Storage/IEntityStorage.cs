@@ -16,9 +16,15 @@
 		IReadOnlyCollection<T> Entities { get; }
 
 		/// <summary>
-		/// Stores the whole Entity.
+		/// Adds the whole Entity inluding its objects graph.
 		/// </summary>
-		/// <param name="entity">Entity to store.</param>
+		/// <param name="entity">Entity to add.</param>
 		void Add(T entity);
+
+		/// <summary>
+		/// Save the entity into inlusing its objects graph.
+		/// </summary>
+		/// <param name="entity">Entity to save</param>
+		void Save(T entity);
 	}
 }

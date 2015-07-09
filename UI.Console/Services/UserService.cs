@@ -10,17 +10,24 @@ namespace UI.Console.Services
 	public class UserService : IUserService
 	{
 		private readonly IEntityStorage<User> _userStorage;
+		private readonly IDateTimeService _dateTimeService;
 
 		#region ctors
 
-		public UserService(IEntityStorage<User> userStorage)
+		public UserService(IEntityStorage<User> userStorage, IDateTimeService dateTimeService)
 		{
 			if (null == userStorage)
 			{
 				throw new ArgumentNullException(nameof(userStorage));
 			}
 
+			if (null == dateTimeService)
+			{
+				throw new ArgumentNullException(nameof(dateTimeService));
+			}
+
 			this._userStorage = userStorage;
+			this._dateTimeService = dateTimeService;
 		}
 
 		#endregion
@@ -60,9 +67,31 @@ namespace UI.Console.Services
 
 		public void PublishMessage(string userName, string text)
 		{
-			userName = userName?.Trim();
 			text = text?.Trim();
+			if (string.IsNullOrWhiteSpace(text))
+			{
+				throw new ArgumentException(nameof(text));
+			}
 
+			var user = this.GetUserByUserName(userName);
+
+			if (null == user)
+			{
+				return;
+			}
+
+			var message = new Message { Text = text, TimeStampUtc = this._dateTimeService.UtcNow };
+			if (null == user.Messages)
+			{
+				//// TODO [FS]: locking???
+				user.Messages = new List<Message> { message };
+			}
+			else
+			{
+				user.Messages.Add(new Message { Text = text, TimeStampUtc = this._dateTimeService.UtcNow });
+			}
+
+			this._userStorage.Save(user);
 		}
 	}
 }

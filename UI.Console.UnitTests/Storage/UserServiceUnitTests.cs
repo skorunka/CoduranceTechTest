@@ -23,7 +23,8 @@ namespace UI.Console.UnitTests.Storage
 		public void GetUserByUserName_WhenUserNameIsNullOrWhiteSpace_ThrowArgumentException(string userName)
 		{
 			var storageMock = new Mock<IEntityStorage<User>>();
-			var service = new UserService(storageMock.Object) as IUserService;
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
 
 			service.GetUserByUserName(userName);
 		}
@@ -35,7 +36,8 @@ namespace UI.Console.UnitTests.Storage
 			storageMock.SetupGet(x => x.Entities)
 				.Returns(new List<User>());
 
-			var service = new UserService(storageMock.Object) as IUserService;
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
 
 			var user = service.GetUserByUserName("non existing username");
 
@@ -52,9 +54,38 @@ namespace UI.Console.UnitTests.Storage
 		public void RegisterNewUser_WhenUserNameIsNullOrWhiteSpace_ThrowArgumentException(string userName)
 		{
 			var storageMock = new Mock<IEntityStorage<User>>();
-			var service = new UserService(storageMock.Object) as IUserService;
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
 
 			service.RegisterNewUser(userName);
+		}
+
+		#endregion
+
+		#region PublishMessage
+
+		[Test, Category("PublishMessage")]
+		[TestCase(null), TestCase(""), TestCase("\n"), TestCase(" \n"), TestCase("\n "), TestCase(" \n "), TestCase("  ")]
+		[ExpectedException(typeof(ArgumentException))]
+		public void PublishMessage_WhenUserNameIsNullOrWhiteSpace_ThrowArgumentException(string userName)
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
+
+			service.PublishMessage(userName, "message");
+		}
+
+		[Test, Category("PublishMessage")]
+		[TestCase(null), TestCase(""), TestCase("\n"), TestCase(" \n"), TestCase("\n "), TestCase(" \n "), TestCase("  ")]
+		[ExpectedException(typeof(ArgumentException))]
+		public void PublishMessage_WhenMessageIsNullOrWhiteSpace_ThrowArgumentException(string message)
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
+
+			service.PublishMessage("userName", message);
 		}
 
 		#endregion
