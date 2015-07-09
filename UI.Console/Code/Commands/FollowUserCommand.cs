@@ -25,9 +25,10 @@
 
 		public string CommandText => "follows";
 
-		public ICollection<string> Execute(string userName, string data)
+		public ICollection<string> Execute(string userName, string userNameToFollow)
 		{
-			throw new NotImplementedException();
+			this._userService.FollowUser(userName, userNameToFollow);
+			return null;
 		}
 	}
 }

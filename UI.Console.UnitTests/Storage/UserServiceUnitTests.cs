@@ -89,5 +89,51 @@ namespace UI.Console.UnitTests.Storage
 		}
 
 		#endregion
+
+		#region FollowUser
+
+		[Test, Category("FollowUser")]
+		public void FollowUser_WhenUserDoesNotExist_ReturnFalse()
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			storageMock.SetupGet(x => x.Entities)
+				.Returns(new List<User> { new User { UserName = "john" } });
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
+
+			var result = service.FollowUser("franta", "john");
+
+			Assert.IsFalse(result);
+		}
+
+		[Test, Category("FollowUser")]
+		public void FollowUser_WhenUserToFollowDoesNotExist_ReturnFalse()
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			storageMock.SetupGet(x => x.Entities)
+				.Returns(new List<User> { new User { UserName = "franta" } });
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
+
+			var result = service.FollowUser("franta", "john");
+
+			Assert.IsFalse(result);
+		}
+
+		[Test, Category("FollowUser")]
+		public void FollowUser_WhenUserWantsToFollowHimself_ReturnFalse()
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			storageMock.SetupGet(x => x.Entities)
+				.Returns(new List<User> { new User { UserName = "franta" } });
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
+
+			var result = service.FollowUser("franta", "franta");
+
+			Assert.IsFalse(result);
+		}
+
+		#endregion
 	}
 }

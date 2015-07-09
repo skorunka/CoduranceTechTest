@@ -60,7 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Code\Commands\PostMessageCommandUnitTests - Copy.cs" />
+    <Compile Include="Code\Commands\ShowTimeLineCommandUnitTests.cs" />
     <Compile Include="Code\Commands\PostMessageCommandUnitTests.cs" />
     <Compile Include="Code\StringInputParserUnitTests.cs" />
     <Compile Include="Code\AppUnitTests.cs" />

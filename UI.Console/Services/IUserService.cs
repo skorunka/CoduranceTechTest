@@ -11,7 +11,13 @@
 
 		void RegisterNewUser(string userName);
 
-		void FollowUser(string userName, string userNameToFollow);
+		/// <summary>
+		/// User can subscribe to another User's TimeLine.
+		/// </summary>
+		/// <param name="userName">User who wants to follow someone.</param>
+		/// <param name="userNameToFollow">Target user.</param>
+		/// <returns>True on success</returns>
+		bool FollowUser(string userName, string userNameToFollow);
 
 		void PublishMessage(string userName, string text);
 	}

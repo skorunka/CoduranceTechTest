@@ -41,7 +41,7 @@ namespace UI.Console.Services
 				throw new ArgumentException(nameof(userName));
 			}
 
-			var user = this._userStorage.Entities.FirstOrDefault(x => string.Compare(x.UserName, userName, StringComparison.InvariantCultureIgnoreCase) == 0);
+			var user = this._userStorage.Entities.FirstOrDefault(x => 0 == string.Compare(x.UserName, userName, StringComparison.InvariantCultureIgnoreCase));
 			return user;
 		}
 
@@ -57,12 +57,32 @@ namespace UI.Console.Services
 			this._userStorage.Add(new User { UserName = userName });
 		}
 
-		public void FollowUser(string userName, string userNameToFollow)
+		public bool FollowUser(string userName, string userNameToFollow)
 		{
-			userName = userName?.Trim();
-			userNameToFollow = userNameToFollow?.Trim();
+			if (0 == string.Compare(userName?.Trim(), userNameToFollow?.Trim(), StringComparison.InvariantCultureIgnoreCase))
+			{
+				return false;
+			}
 
-			throw new System.NotImplementedException();
+			var user = this.GetUserByUserName(userName);
+			var userToFollow = this.GetUserByUserName(userNameToFollow);
+
+			if (null == user || null == userToFollow)
+			{
+				return false;
+			}
+
+			if (null == user.SubscribedTo)
+			{
+				//// TODO [FS]: locking???
+				user.SubscribedTo = new List<User> { userToFollow };
+			}
+			else
+			{
+				user.SubscribedTo.Add(userToFollow);
+			}
+
+			return true;
 		}
 
 		public void PublishMessage(string userName, string text)
