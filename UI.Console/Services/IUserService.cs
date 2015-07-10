@@ -9,7 +9,9 @@
 	{
 		User GetUserByUserName(string userName);
 
-		void RegisterNewUser(string userName);
+		User GetOrRegisterNewUserByUserName(string userName);
+
+		User RegisterNewUser(string userName);
 
 		/// <summary>
 		/// User can subscribe to another User's TimeLine.

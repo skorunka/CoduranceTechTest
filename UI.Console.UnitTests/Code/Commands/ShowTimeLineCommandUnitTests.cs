@@ -7,7 +7,8 @@ namespace UI.Console.UnitTests.Code.Commands
 
 	using Console.Code.Commands;
 	using Entities;
-	using Services;
+
+	using Console.Services;
 
 	[TestFixture]
 	public class ShowTimeLineCommandUnitTests

@@ -9,6 +9,9 @@ namespace UI.Console.Services
 
 	public class UserService : IUserService
 	{
+		//// primitive locking
+		private static readonly object SyncLock = new object();
+
 		private readonly IEntityStorage<User> _userStorage;
 		private readonly IDateTimeService _dateTimeService;
 
@@ -45,7 +48,22 @@ namespace UI.Console.Services
 			return user;
 		}
 
-		public void RegisterNewUser(string userName)
+		public User GetOrRegisterNewUserByUserName(string userName)
+		{
+			var user = this.GetUserByUserName(userName);
+			if (null != user)
+			{
+				return user;
+			}
+
+			//// double-checked locking
+			lock (SyncLock)
+			{
+				return this.GetUserByUserName(userName) ?? this.RegisterNewUser(userName);
+			}
+		}
+
+		public User RegisterNewUser(string userName)
 		{
 			userName = userName?.Trim();
 
@@ -54,7 +72,9 @@ namespace UI.Console.Services
 				throw new ArgumentException(nameof(userName));
 			}
 
-			this._userStorage.Add(new User { UserName = userName });
+			var user = new User { UserName = userName };
+            this._userStorage.Add(user);
+			return user;
 		}
 
 		public bool FollowUser(string userName, string userNameToFollow)

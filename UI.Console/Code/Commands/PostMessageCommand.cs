@@ -7,9 +7,6 @@
 
 	public class PostMessageCommand : ICommand
 	{
-		//// primitive locking
-		private static readonly object SyncLock = new object();
-
 		private readonly IUserService _userService;
 
 		#region ctors
@@ -37,25 +34,7 @@
 				throw new ArgumentException(nameof(message));
 			}
 
-			var user = this._userService.GetUserByUserName(userName);
-
-			#region create user if does not exist
-
-			if (null == user)
-			{
-				//// double-checked locking
-				lock (SyncLock)
-				{
-					user = this._userService.GetUserByUserName(userName);
-					if (null == user)
-					{
-						this._userService.RegisterNewUser(userName);
-						user = this._userService.GetUserByUserName(userName);
-					}
-				}
-			}
-
-			#endregion
+			var user = this._userService.GetOrRegisterNewUserByUserName(userName);
 
 			this._userService.PublishMessage(user.UserName, message);
 

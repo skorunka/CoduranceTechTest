@@ -18,7 +18,7 @@ namespace UI.Console.Code
 					years += 1;
 				}
 
-				return string.Format("about {0} {1} ago", years, years == 1 ? "year" : "years");
+				return string.Format("{0} {1} ago", years, years == 1 ? "year" : "years");
 			}
 
 			if (span.Days > 30)
@@ -29,27 +29,27 @@ namespace UI.Console.Code
 					months += 1;
 				}
 
-				return string.Format("about {0} {1} ago", months, months == 1 ? "month" : "months");
+				return string.Format("{0} {1} ago", months, months == 1 ? "month" : "months");
 			}
 
 			if (span.Days > 0)
 			{
-				return string.Format("about {0} {1} ago", span.Days, span.Days == 1 ? "day" : "days");
+				return string.Format("{0} {1} ago", span.Days, span.Days == 1 ? "day" : "days");
 			}
 
 			if (span.Hours > 0)
 			{
-				return string.Format("about {0} {1} ago", span.Hours, span.Hours == 1 ? "hour" : "hours");
+				return string.Format("{0} {1} ago", span.Hours, span.Hours == 1 ? "hour" : "hours");
 			}
 
 			if (span.Minutes > 0)
 			{
-				return string.Format("about {0} {1} ago", span.Minutes, span.Minutes == 1 ? "minute" : "minutes");
+				return string.Format("{0} {1} ago", span.Minutes, span.Minutes == 1 ? "minute" : "minutes");
 			}
 
 			if (span.Seconds > 5)
 			{
-				return $"about {span.Seconds} seconds ago";
+				return $"{span.Seconds} seconds ago";
 			}
 
 			if (span.Seconds <= 5)

@@ -2,9 +2,9 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyProduct("Condurance.TechTest")]
-[assembly: AssemblyCompany("Condurance")]
-[assembly: AssemblyCopyright("© 2015 Condurance, All Rights Reserved")]
+[assembly: AssemblyProduct("Codurance.TechTest")]
+[assembly: AssemblyCompany("Codurance")]
+[assembly: AssemblyCopyright("© 2015 Codurance, All Rights Reserved")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]

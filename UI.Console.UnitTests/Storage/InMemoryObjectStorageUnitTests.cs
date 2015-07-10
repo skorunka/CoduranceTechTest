@@ -7,7 +7,7 @@ namespace UI.Console.UnitTests.Storage
 	using NUnit.Framework;
 
 	using Entities;
-	using UI.Console.Storage;
+	using Console.Storage;
 
 	[TestFixture]
 	public class InMemoryObjectStorageUnitTests

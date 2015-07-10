@@ -1,5 +1,5 @@
 // ReSharper disable InconsistentNaming
-namespace UI.Console.UnitTests.Storage
+namespace UI.Console.UnitTests.Services
 {
 	using System;
 	using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace UI.Console.UnitTests.Storage
 	using NUnit.Framework;
 
 	using Entities;
-	using Services;
+	using Console.Services;
 	using Console.Storage;
 
 	[TestFixture]
@@ -42,6 +42,44 @@ namespace UI.Console.UnitTests.Storage
 			var user = service.GetUserByUserName("non existing username");
 
 			Assert.IsNull(user);
+		}
+
+		#endregion
+
+		#region GetOrRegisterNewUserByUserName
+
+		[Test, Category("GetOrRegisterNewUserByUserName")]
+		public void GetOrRegisterNewUserByUserName_WhenUserDoesNotExist_RegisterNewUser()
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			storageMock.Setup(x => x.Entities)
+				.Returns(new List<User>());
+			storageMock.Setup(x => x.Add(It.Is<User>(p => p.UserName == "franta")))
+				.Verifiable();
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
+
+			var user = service.GetOrRegisterNewUserByUserName("franta");
+
+			Assert.IsNotNull(user);
+			storageMock.Verify();
+		}
+
+		[Test, Category("GetOrRegisterNewUserByUserName")]
+		public void GetOrRegisterNewUserByUserName_WhenUserExist_DoNotCreateNewOne()
+		{
+			var storageMock = new Mock<IEntityStorage<User>>();
+			storageMock.Setup(x => x.Entities)
+				.Returns(new List<User> { new User { UserName = "franta" } });
+			storageMock.Setup(x => x.Add(It.Is<User>(p => p.UserName == "franta")))
+				.Throws(new AssertionException("Should not be called."));
+			var dateTimeServiceMock = new Mock<IDateTimeService>();
+			var service = new UserService(storageMock.Object, dateTimeServiceMock.Object) as IUserService;
+
+			var user = service.GetOrRegisterNewUserByUserName("franta");
+
+			Assert.IsNotNull(user);
+			storageMock.Verify();
 		}
 
 		#endregion
