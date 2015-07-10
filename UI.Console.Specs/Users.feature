@@ -1,11 +1,7 @@
-﻿Feature: Users
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+﻿Feature: Registering new Users
 
-@mytag
-Scenario: Add two numbers
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen
+Scenario: Non-existing users should be created as they post their first message
+	Given Non-existing user "John"
+	When Post message "hello"
+	Then in storage is registered new user with username "John"
+	And user "John" has a message "hello" on his timeline
